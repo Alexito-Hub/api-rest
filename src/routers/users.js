@@ -6,7 +6,9 @@ const User = require('../models/user');
 router.get('/', async (req, res) => {
     try {
         const users = await User.find();
-        res.status(200).json({
+        
+        
+        res.status(200).render('user',{
             creator: 'Zio',
             status: 200,
             users: users
