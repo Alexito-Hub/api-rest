@@ -1,0 +1,20 @@
+{
+  "name": "api-rest",
+  "version": "1.0.0",
+  "description": "api rest",
+  "main": "app.js",
+  "scripts": {
+      "start": "node app",
+      "dev": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alexito-Hub/api-rest.git"
+  },
+  "author": "Alessandro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alexito-Hub/api-rest/issues"
+  },
+  "homepage": "https://github.com/Alexito-Hub/api-rest#readme"
+}
