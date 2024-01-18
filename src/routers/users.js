@@ -7,12 +7,13 @@ router.get('/', async (req, res) => {
     try {
         const users = await User.find();
         res.status(200).json({
+            creator: 'Zio',
             status: 200,
             users: users
         });
     } catch (e) {
         res.status(500).json({
-            creator: name,
+            creator: 'Zio',
             status: 500,
             error: '[!] Parece que hubo un problema'
         });
