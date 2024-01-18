@@ -2,10 +2,10 @@
   "name": "api-rest",
   "version": "1.0.0",
   "description": "api rest",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-      "start": "node app",
-      "dev": "nodemon app"
+      "start": "node src/app",
+      "dev": "nodemon src/app"
   },
   "repository": {
     "type": "git",
