@@ -4,17 +4,31 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const MongoClient = require("mongodb");
 
-const client = new MongoClient(`mongodb+srv://${process.env.USER_DB}:${process.env.PASSWORD_DB}@cluster0.mongodb.net/api-rest`);
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = `mongodb+srv://${USER_DB}:${PASSWORD_DB}@serverdatadb.39fv13g.mongodb.net/?retryWrites=true&w=majority`;
 
-client.connect((err, db) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("Conectado a la base de datos");
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
   }
 });
+
+async function run() {
+  try {
+
+    await client.connect();
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+
+    await client.close();
+  }
+}
+run().catch(console.dir);
+
 
 
 
