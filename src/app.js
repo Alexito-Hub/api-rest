@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const uri = `mongodb+srv://${process.env.USER_DB}:${process.env.PASSWORD_DB}@serverdatadb.39fv13g.mongodb.net/?retryWrites=true&w=majority`;
 
-const client = new MongoClient(uri, {
+const db = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -16,16 +16,13 @@ const client = new MongoClient(uri, {
 
 async function runDB() {
   try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. Successfully connected to MongoDB!");
+    await db.connect();
+    await db.db("admin").command({ ping: 1 });
+    console.log("Database conectado con exito");
   } finally {
-    // No need to close the connection here, let it be handled by a proper middleware
+
   }
 }
-
-app.use(express.json()); // Parse JSON bodies
-app.use('/api/users', require('./routers/users'));
 
 app.listen(port, () => {
   runDB().catch(console.dir);
