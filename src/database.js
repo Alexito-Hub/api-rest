@@ -11,13 +11,16 @@ const db = new MongoClient(uri, {
 });
 
 async function runDB() {
-  try {
-    await db.connect();
-    await db.db("admin").command({ ping: 1 });
-    console.log("Database conectado con exito");
-  } finally {
-
-  }
+    try {
+        await db.connect();
+        await db.db("admin").command({ ping: 1 });
+        console.log("Database conectado con éxito");
+    } catch (error) {
+        console.log("Error al conectar con la base de datos:", error);
+    } finally {
+        await db.close();
+        console.log("Conexión cerrada");
+    }
 }
 
-module.exports = runDB
+module.exports = { runDB };

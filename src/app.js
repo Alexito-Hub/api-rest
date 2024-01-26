@@ -15,6 +15,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 runDB().catch(console.dir);
+
 app.listen(app.get('port'), () => {
-  console.log(`Servidor en línea`);
+    console.log(`Servidor en línea en el puerto ${app.get('port')}`);
+}).on('error', (err) => {
+    console.error("Error al iniciar el servidor:", err);
 });
