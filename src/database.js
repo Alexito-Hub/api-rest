@@ -1,23 +1,20 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const mongoose = require('mongoose');
 
 const uri = `mongodb+srv://${process.env.USER_DB}:${process.env.PASSWORD_DB}@serverdatadb.39fv13g.mongodb.net/?retryWrites=true&w=majority`;
 
-const db = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
-async function runDB() {
-    try {
-        await db.connect();
-        await db.db("admin").command({ ping: 1 });
-        console.log("Database conectado con éxito");
-    } catch (error) {
-        console.log("Error al conectar con la base de datos:", error);
-    }
-}
+const db = mongoose.connection;
 
-module.exports = { runDB };
+db.on('error', (error) => {
+  console.error('Error al conectar con la base de datos:', error);
+});
+
+db.once('open', () => {
+  console.log('Base de datos conectada con éxito');
+});
+
+module.exports = mongoose;
