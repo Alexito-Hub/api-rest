@@ -1,30 +1,20 @@
 require('dotenv').config();
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+
+const morgan = require("morgan")
 
 const app = express();
-const port = process.env.PORT || 3000;
-const uri = `mongodb+srv://${process.env.USER_DB}:${process.env.PASSWORD_DB}@serverdatadb.39fv13g.mongodb.net/?retryWrites=true&w=majority`;
 
-const db = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
+const { runDB } = require('./database')
 
-async function runDB() {
-  try {
-    await db.connect();
-    await db.db("admin").command({ ping: 1 });
-    console.log("Database conectado con exito");
-  } finally {
+app.set('port', process.env.PORT || 3000)
+app.set('json spaces', 2)
 
-  }
-}
+app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-app.listen(port, () => {
-  runDB().catch(console.dir);
-  console.log(`Servidor en línea en el puerto ${port}`);
+runDB().catch(console.dir);
+app.listen(app.get('port'), () => {
+  console.log(`Servidor en línea`);
 });
