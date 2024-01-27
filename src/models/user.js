@@ -14,7 +14,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     }
-});
+}, { collection: 'User', versionKey: false });
 
 const DATA_USER_DB = mongoose.model('User', userSchema);
 

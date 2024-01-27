@@ -5,7 +5,7 @@ const DATA_KEY_DB = require('../../models/key');
 
 router.get('/', async (req, res) => {
     try {
-        const keys = DATA_KEY_DB.find()
+        const keys = await DATA_KEY_DB.find()
         res.status(200).json({
             status: 200,
             keys
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const key = new DATA_KEY_DB(req.body);
+        const key = await DATA_KEY_DB(req.body);
         await key.save();
         res.status(201).json({
             status: 201,
