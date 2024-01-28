@@ -12,9 +12,9 @@ mongoose.connect(uri)
 const db = mongoose.connection;
 db.on('error', (error) => {console.error('Error al conectar con la base de datos:', error)});
 
+app.use(cors())
 app.set('port', process.env.PORT || 3000)
 app.set('json spaces', 4)
-app.use(cors())
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -24,7 +24,9 @@ app.use('/private/user', require('./routes/private/user'));
 app.use('/private/key', require('./routes/private/key'));
 
 // CONEXIONES DOWNLOAD _______________________________________________________
-
+app.use('/api/download/ytdl-search', require('./routes/download/ytdl-search'));
+app.use('/api/download/ytdl-mp4', require('./routes/download/ytdl-mp4'));
+app.use('/api/download/ytdl-mp3', require('./routes/download/ytdl-mp3'));
 
 // CONEXIONES DATA _______________________________________________________
 
