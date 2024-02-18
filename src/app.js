@@ -23,8 +23,8 @@ app.use(express.json());
 app.use('/private/user', require('./routes/private/user'));
 app.use('/private/key', require('./routes/private/key'));
 
-app.use('/comments/lu', require('./routes/data/comments-lu'))
-app.use('/comments/jamie', require('./routes/data/comments-jamie'))
+app.use('/comments/lu', require('./routes/idf-ee/comments-lu'))
+app.use('/comments/jamie', require('./routes/idf-ee/comments-jamie'))
 
 // CONEXIONES DOWNLOAD _______________________________________________________
 app.use('/api/download/ytdl-search', require('./routes/download/ytdl-search'));
@@ -35,6 +35,10 @@ app.use('/api/download/ytdl-mp3', require('./routes/download/ytdl-mp3'));
 
 
 // CONEXIONES GAME _______________________________________________________
+
+
+// CONEXIONES OTHERS ___________________________________________________________
+app.use('/api/others/frases', require('./routes/others/frases'))
 
 
 app.listen(app.get('port'), () => {
