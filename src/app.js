@@ -30,6 +30,8 @@ app.use('/comments/jamie', require('./routes/idf-ee/comments-jamie'))
 app.use('/api/download/ytdl-search', require('./routes/download/ytdl-search'));
 app.use('/api/download/ytdl-mp4', require('./routes/download/ytdl-mp4'));
 app.use('/api/download/ytdl-mp3', require('./routes/download/ytdl-mp3'));
+app.use('/api/download/tiktok', require('./routes/download/tiktok'));
+
 
 // CONEXIONES DATA _______________________________________________________
 
