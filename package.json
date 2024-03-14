@@ -25,6 +25,7 @@
     "mongoose": "^8.1.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.3",
+    "string-similarity": "^4.0.4",
     "yt-search": "^2.10.4",
     "ytdl-core": "^4.11.5"
   }

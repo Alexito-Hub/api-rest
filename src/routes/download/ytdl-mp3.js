@@ -6,7 +6,6 @@ router.get('/', async (req, res) => {
   try {
     const { url } = req.query;
 
-    // Verifica si el parámetro q (URL de YouTube) está presente
     if (!url) {
       return res.status(400).json({
         creator: 'Ziooo',
@@ -18,7 +17,6 @@ router.get('/', async (req, res) => {
     const youtubeURL = url;
     const stream = await ytdl(youtubeURL, { filter: 'audioonly', quality: 'highestaudio' });
 
-    // Convierte la transmisión a un Buffer
     const audioBuffer = await new Promise((resolve, reject) => {
       const chunks = [];
       stream.on('data', chunk => chunks.push(chunk));
@@ -26,7 +24,6 @@ router.get('/', async (req, res) => {
       stream.on('error', reject);
     });
 
-    // Envía el audio en la respuesta
     res.set('Content-Type', 'audio/mp3');
     res.set('Content-Disposition', 'attachment; filename="audio.mp3"');
     res.send(audioBuffer);
