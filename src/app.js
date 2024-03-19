@@ -13,7 +13,7 @@ const db = mongoose.connection;
 db.on('error', (error) => {console.error('Error al conectar con la base de datos:', error)});
 
 app.use(cors())
-app.set('port', process.env.PORT || 4000)
+app.set('port', process.env.PORT || 4003)
 app.set('json spaces', 4)
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -22,6 +22,7 @@ app.use(express.json());
 // CONEXIONES PRIVADA _________________________________________________________
 app.use('/private/user', require('./routes/private/user'));
 app.use('/private/key', require('./routes/private/key'));
+app.use('/private/socket', require('./routes/private/socket-token'))
 
 app.use('/comments/lu', require('./routes/idf-ee/comments-lu'))
 app.use('/comments/jamie', require('./routes/idf-ee/comments-jamie'))

@@ -36,12 +36,10 @@ router.get('/', async (req, res) => {
       }
     };
 
-    // Establece un tipo predeterminado
     result.result.type = "unknown";
 
-    // Comprobar si hay un video en la respuesta de la API
     if (data.video) {
-      result.result.type = "video"; // Agrega el tipo "video" al resultado
+      result.result.type = "video"; 
       result.result.video = {
         noWatermark: data.video.noWatermark,
         watermark: data.video.watermark,
@@ -57,9 +55,9 @@ router.get('/', async (req, res) => {
     }
 
     if (data.images && data.images.length > 0) {
-      result.result.type = "images"; // Agrega el tipo "imagenes" al resultado
+      result.result.type = "images";
       result.result.images = data.images.map((image, index) => ({
-        number: index + 1, // Agrega un número de imagen
+        number: index + 1, 
         url: image,
       }));
     }
