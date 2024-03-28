@@ -16,12 +16,16 @@ router.post('/login', async (req, res) => {
     const { username, age, number } = req.body;
     try {
         let usuario = await SocketModel.findOne({ username: username });
+        let balance = 1000
         if (!usuario) {
             usuario = new SocketModel({
                 username: username,
                 email: '',
                 age: age,
-                bot: [{ number: number, balance: 1000 }],
+                bot: [{
+                    number: number,
+                    balance: balance
+                }],
                 socket: []
             });
             await usuario.save();
@@ -44,28 +48,46 @@ router.post('/login', async (req, res) => {
     }
 });
   
-router.post('/socket', async (req, res) => {
+rorouter.post('/socket', async (req, res) => {
     const { username, email, age, valid } = req.body;
     try {
-
-        let token = generateToken()
         let usuario = await SocketModel.findOne({ username: username });
+
         if (usuario) {
-            usuario.email = email;
-            usuario.socket.push({ token: token, valid: valid });
+            const existingToken = usuario.socket.find((socket) => socket.valid === true);
+            if (existingToken) {
+                existingToken.valid = valid;
+            } else {
+                let token = generateToken();
+                usuario.socket.push({
+                    token: token,
+                    valid: valid
+                });
+            }
+
+            if (!usuario.email) {
+                usuario.email = email;
+            }
         } else {
+            let token = generateToken();
             usuario = new SocketModel({
                 username: username,
                 email: email,
                 age: age,
                 bot: [],
-                socket: [{ token: token, valid: valid }]
+                socket: [{
+                    token: token,
+                    valid: valid
+                }]
             });
         }
+
         await usuario.save();
         res.status(200).json({ 
             status: 200,
-            message: 'Perfil actualizado correctamente.' 
+            message: 'Token creado correctamente.',
+            token: token,
+            valid: valid ? valid === 'Activado' : 'Desactivado'
         });
     } catch (error) {
         console.error(error);
@@ -78,34 +100,42 @@ router.post('/socket', async (req, res) => {
 
 router.get('/socket/:token', async (req, res) => {
     const token = req.params.token;
-  
+
     try {
         let decodedToken = token;
         if (token.startsWith('encrypted:')) {
             decodedToken = decryptToken(token.slice(10));
         }
         const usuario = await SocketModel.findOne({ 'socket.token': decodedToken });
+
         if (!usuario) {
             return res.status(404).json({
                 status: 404,
-                message: 'Token no válido.'
+                valid: false,
+                message: 'Token no encontrado.'
             });
         }
+
         const socketEntry = usuario.socket.find(entry => entry.token === decodedToken);
+
         if (!socketEntry || !socketEntry.valid) {
             return res.status(401).json({
                 status: 401,
-                message: 'Token no válido.'
+                valid: false,
+                message: 'Token inválido.'
             });
         }
+
         res.status(200).json({
             status: 200,
+            valid: true,
             message: 'Token válido.'
         });
     } catch (error) {
         console.error(error);
         res.status(500).json({
             status: 500,
+            valid: false,
             error: 'Error al verificar el token.'
         });
     }
