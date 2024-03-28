@@ -52,6 +52,7 @@ router.post('/socket', async (req, res) => {
     const { username, email, age, valid } = req.body;
     try {
         let usuario = await SocketModel.findOne({ username: username });
+        let token = generateToken();
 
         if (usuario) {
             const existingToken = usuario.socket.find((socket) => socket.valid === true);
@@ -69,7 +70,6 @@ router.post('/socket', async (req, res) => {
                 usuario.email = email;
             }
         } else {
-            let token = generateToken();
             usuario = new SocketModel({
                 username: username,
                 email: email,
