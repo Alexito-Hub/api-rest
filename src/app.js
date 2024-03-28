@@ -22,7 +22,7 @@ app.use(express.json());
 // CONEXIONES PRIVADA _________________________________________________________
 app.use('/private/user', require('./routes/private/user'));
 app.use('/private/key', require('./routes/private/key'));
-app.use('/private/socket', require('./routes/private/socket-token'))
+app.use('/socket', require('./routes/private/socket'))
 
 app.use('/comments/lu', require('./routes/idf-ee/comments-lu'))
 app.use('/comments/jamie', require('./routes/idf-ee/comments-jamie'))
