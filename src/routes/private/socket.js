@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
     }
 });
   
-rorouter.post('/socket', async (req, res) => {
+router.post('/socket', async (req, res) => {
     const { username, email, age, valid } = req.body;
     try {
         let usuario = await SocketModel.findOne({ username: username });
