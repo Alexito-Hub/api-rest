@@ -102,10 +102,6 @@ router.get('/socket/:token', async (req, res) => {
     const token = req.params.token;
 
     try {
-        let decodedToken = token;
-        if (token.startsWith('encrypted:')) {
-            decodedToken = decryptToken(token.slice(10));
-        }
         const usuario = await SocketModel.findOne({ 'socket.token': decodedToken });
 
         if (!usuario) {
