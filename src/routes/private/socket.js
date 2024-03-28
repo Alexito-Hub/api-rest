@@ -87,7 +87,7 @@ router.post('/socket', async (req, res) => {
             status: 200,
             message: 'Token creado correctamente.',
             token: token,
-            valid: valid ? valid === 'Activado' : 'Desactivado'
+            valid: valid ? 'Activado' : 'Desactivado'
         });
     } catch (error) {
         console.error(error);
