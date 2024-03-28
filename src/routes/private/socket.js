@@ -102,7 +102,7 @@ router.get('/socket/:token', async (req, res) => {
     const token = req.params.token;
 
     try {
-        const usuario = await SocketModel.findOne({ 'socket.token': decodedToken });
+        const usuario = await SocketModel.findOne({ 'socket.token': token });
 
         if (!usuario) {
             return res.status(404).json({
@@ -112,7 +112,7 @@ router.get('/socket/:token', async (req, res) => {
             });
         }
 
-        const socketEntry = usuario.socket.find(entry => entry.token === decodedToken);
+        const socketEntry = usuario.socket.find(entry => entry.token === token);
 
         if (!socketEntry || !socketEntry.valid) {
             return res.status(401).json({
